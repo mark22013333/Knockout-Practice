@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Start</title>
+    <script src="/Knockout-Practice/js/knockout-3.5.1.js"></script>
+</head>
+<body>
+    <!-- 使用observable 讓資料雙向綁定 -->
+    <input type="text" data-bind="value: msg">
+    <span data-bind="text: msg"></span>
+    <hr>
+    <span>
+        我是數字：<span data-bind="text: num">sss</span>
+    </span>
+
+</body>
+<script>
+    let vm = {
+        // 使用observable觀察資料，可在括號內給予初始值
+        msg: ko.observable('Hello, World'),
+        num: ko.observable()
+    }
+
+    // 賦值
+    vm.msg(123).num(777)
+
+    // 讀取資料
+    let m = vm.msg()
+    console.log('m:', m)
+
+    // 將資料綁定並建立在ko
+    ko.applyBindings(vm);
+</script>
+</html>
