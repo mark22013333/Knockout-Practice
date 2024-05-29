@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe</title>
+    <script src="/Knockout-Practice/js/knockout-3.5.1.js"></script>
+</head>
+<body>
+    <span data-bind="text: name"></span>
+    <input type="text" data-bind="value: age">
+</body>
+<script>
+    
+    function viewModel(){
+        let self = this;
+        self.name = ko.observable('mark')
+        self.age = ko.observable(18)
+    }
+
+    let vm = new viewModel()
+
+    // 顯示訂閱，在資料發生變化時，可寫上自定義的邏輯
+    vm.age.subscribe(function(newVal){
+        if (newVal > 110) {
+            vm.name('wow')
+        } else {
+            vm.name('')
+        }
+    })
+
+    // 取消顯示訂閱 （這樣上面的subscribe就無效了）
+    vm.age.dispose()
+
+    ko.applyBindings(vm)
+
+</script>
+</html>
