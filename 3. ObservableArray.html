@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ObservableArray</title>
+    <script src="/Knockout-Practice/js/knockout-3.5.1.js"></script>
+</head>
+<body>
+    <input type="text" data-bind="value: msg">
+    <span data-bind="text: msg"></span>
+    <span data-bind="text: msgArray().length"></span>
+    <span data-bind="text: msgArray()"></span>
+    <hr>
+    <input type="text" data-bind="value: person().name">
+    <span data-bind="text: person().name"></span>
+</body>
+<script>
+    let vm = {
+        person: ko.observable({
+            // name: 'Mark', // 這樣寫，物件內的屬性並不會被監控到
+            name: ko.observable('Mark'), // 要讓物件的屬性也要監控到，需要將屬性也寫observable
+            age: 30
+        }),
+        msg: ko.observable('Hello'),
+        msgArray: ko.observableArray()
+    }
+
+    vm.msgArray.push('a')
+    vm.msgArray.push('b')
+    vm.msgArray.push('d')
+    vm.msgArray.push('e')
+    vm.msgArray.push('h')
+
+    vm.msgArray.pop()
+
+    ko.applyBindings(vm)
+</script>
+</html>
