@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computed</title>
+    <script src="/Knockout-Practice/js/knockout-3.5.1.js"></script>
+</head>
+<body>
+    <span data-bind="text: firstName"></span>
+    <span data-bind="text: lastName"></span>
+    <hr>
+    <span data-bind="text: fullName"></span>
+    <input type="text" data-bind="textInput: fullName">
+</body>
+<script>
+    // =========讓computed放callback=========
+    // function viewModel(){
+    //     let self = this // 將this賦值給self變數，那麼computed第二個參數就不需要放this
+    //     self.firstName = ko.observable('Mark')
+    //     self.lastName = ko.observable('Cheng')
+
+    //     // 取值記得要使用()
+    //     self.fullName = ko.computed(function(){
+    //         return self.firstName() + " " + self.lastName()
+    //     })
+    // }
+
+    // ko.applyBindings(new viewModel())
+
+    // =========讓computed放物件=========
+    function myViewModel(){
+        let self = this
+        self.firstName = ko.observable('Mark')
+        self.lastName = ko.observable('Cheng')
+
+        self.fullName = ko.computed({
+            read: function(){
+                return self.firstName() + " " + self.lastName()
+            },
+            write: function(value){
+                let lastSpacePos = value.lastIndexOf(' ')
+                if(lastSpacePos > 0){
+                    self.firstName(value.substring(0, lastSpacePos));
+                    self.lastName(value.substring(lastSpacePos + 1));
+                }
+            }
+        })
+    }
+
+    ko.applyBindings(new myViewModel())
+
+</script>
+</html>
