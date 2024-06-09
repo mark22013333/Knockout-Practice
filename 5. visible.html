@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visible</title>
+    <script src="/Knockout-Practice/js/knockout-3.5.1.js"></script>
+</head>
+<body>
+    <div data-bind="visible: shouldShowMessage">
+        shouldShowMessage為true時顯示
+    </div>
+
+    <div data-bind="visible: myArr().length > 0">
+        myArr不為空時顯示
+    </div>
+</body>
+<script>
+    let vm = {
+        shouldShowMessage: ko.observable(true),
+        myArr: ko.observableArray([])
+    }
+
+    // vm.shouldShowMessage(false)
+
+    vm.myArr.push(1)
+    // vm.myArr.pop()
+
+    ko.applyBindings(vm)
+</script>
+</html>
