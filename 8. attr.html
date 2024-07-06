@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attr</title>
+    <script src="/Knockout-Practice/js/knockout-3.5.1.js"></script>
+</head>
+
+<body>
+    <a data-bind="attr: {
+        href: url,
+        title: details,
+        target: ways
+    }">
+        google
+    </a>
+</body>
+<script type="text/javascript">
+    let vm = {
+        msg: ko.observable(),
+        url: ko.observable("https://google.com.tw"),
+        details: ko.observable('谷哥一下'),
+        ways: ko.observable('_blank')
+    }
+
+    ko.applyBindings(vm)
+</script>
+</html>
