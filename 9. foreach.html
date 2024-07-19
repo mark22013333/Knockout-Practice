@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>foreach</title>
+    <script src="/Knockout-Practice/js/knockout-3.5.1.js"></script>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>First name</th>
+                <th>Last name</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: people">
+            <!-- 當迴圈變數是 $index -->
+            <tr>
+                <td data-bind="text: $index"></td>
+                <td data-bind="text: firstName"></td>
+                <td data-bind="text: lastName"></td>
+            </tr>
+            <!-- 當迴圈變數是 $data -->
+            <!-- <tr>
+                <td data-bind="text: '--'"></td>
+                <td data-bind="text: $data.firstName"></td>
+                <td data-bind="text: $data.lastName"></td>
+            </tr> -->
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h4>People</h4>
+    <ul data-bind="foreach: people2">
+        <li>
+            Name at position
+            <span data-bind="text: $index"></span>
+            <span data-bind="text: name"></span>
+            <!-- $parent 是指父級別的 -->
+            <!-- 因為要使用removePerson方法是跟foreach同樣級別 -->
+            <!-- 所以要使用$parent指向同級別的方法中才能正常呼叫 -->
+            <a href="#" data-bind="click: $parent.removePerson">Remove</a>
+        </li>
+    </ul>
+    <button data-bind="click: addPerson">Add</button>
+</body>
+<script>
+    let vm = {
+        people:[
+            {firstName: 'Bert', lastName: 'Bertington'},
+            {firstName: 'Charles', lastName: 'Charlesforth'},
+            {firstName: 'Denise', lastName: 'Dentiste'},
+        ],
+        people2: ko.observableArray([
+            {name: 'Bert'},
+            {name: 'Charles'},
+            {name: 'Denise'},
+        ])
+    }
+
+    vm.addPerson = function(){
+        vm.people2.push({
+            name: "New at " + new Date()
+        })
+    }
+
+    vm.removePerson = function() {
+        vm.people2.remove(this)
+    }
+
+    // vm.people.pop()
+
+    ko.applyBindings(vm)
+</script>
+</html>
