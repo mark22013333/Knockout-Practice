@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>if</title>
+    <script src="/Knockout-Practice/js/knockout-3.5.1.js"></script>
+</head>
+<body>
+    <label>
+        <input type="checkbox" data-bind="checked: showMessage">
+        Show Message
+    </label>
+    <div data-bind="if: showMessage">
+        Here is a message. Astonishing.
+    </div>
+
+    <ul data-bind="foreach: people">
+        <li>
+            姓名：<b data-bind="text: name"></b>
+            <!-- 如果有年齡才顯示，null就不顯示 -->
+            <div data-bind="if: age">
+                年齡：<b data-bind="text: age"></b>
+            </div>
+            <!-- ifnot用法，當沒有年齡則顯示(--) -->
+            <div data-bind="ifnot: age">
+                年齡：<b>--</b>
+            </div>
+        
+            <!-- ko註解寫法 -->
+            <!-- ko ifnot: age -->
+            年齡：<b>--</b>
+            <!-- /ko -->
+            
+        </li>
+    </ul>
+</body>
+<script type="text/javascript">
+    let vm = {
+        showMessage: ko.observable(false),
+        people: [
+            {name: '李阿明', age: null},
+            {name: '張大千', age: 20}
+        ]
+    }
+
+    ko.applyBindings(vm)
+</script>
+</html>
