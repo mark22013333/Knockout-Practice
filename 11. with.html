@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>with</title>
+    <script src="/Knockout-Practice/js/knockout-3.5.1.js"></script>
+</head>
+<body>
+    <h1 data-bind="text: city"></h1>
+    <!-- 原生方式，通過 coords.latitude 訪問 -->
+    <p>
+        Latitude: <span data-bind="text: coords.latitude"></span>,
+        Longitude: <span data-bind="text: coords.longitude"></span>
+    </p>
+
+    <!-- 使用 with 改變綁定上下文（綁定上下文切換到 coords） -->
+    <p data-bind="with: coords">
+        Latitude: <span data-bind="text: latitude"></span>,
+        Longitude: <span data-bind="text: longitude"></span>
+    </p>
+
+    <!-- 使用 using 改變綁定上下文（綁定上下文切換到 coords） -->
+    <p data-bind="using: coords">
+        Latitude: <span data-bind="text: latitude"></span>,
+        Longitude: <span data-bind="text: longitude"></span>
+    </p>
+
+</body>
+<script>
+    let vm = {
+        city: 'London',
+        coords: {
+            latitude: 102.1223,
+            longitude: 422.1456
+        }
+    }
+
+    ko.applyBindings(vm)
+</script>
+</html>
