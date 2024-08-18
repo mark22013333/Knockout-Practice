@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>With2</title>
+    <script src="/Knockout-Practice/js/knockout-3.5.1.js"></script>
+</head>
+<body>
+    <form data-bind="submit: getTweets">
+        Twitter account:
+        <input data-bind="value: twitterName" />
+        <button type="submit">Get tweets</button>
+    </form>
+    
+    <!-- 通過 with 修改 resultData 上下文綁定 -->
+    <div data-bind="with: resultData">
+        <h3>Recent tweets fetched at <span data-bind="text: retrievalDate"></span></h3>
+        <ol data-bind="foreach: topTweets">
+            <li data-bind="text: text"></li>
+        </ol>
+        <button data-bind="click: $parent.clearResults">Clear tweets</button>
+    </div>
+    
+</body>
+<script>
+    function viewModel(){
+        let self = this
+        self.twitterName = ko.observable('@example')
+        self.resultData = ko.observable()
+
+        self.getTweets = function() {
+            let name = self.twitterName();
+            let simulatedResults = [
+                {text: name + ' What a nice day.'},
+                {text: name + ' Building same cool apps.'},
+                {text: name + ' Just saw a famous celebrity eating lard. Yum.'}
+            ];
+
+            self.resultData({
+                retrievalDate: new Date(),
+                topTweets: simulatedResults
+            })
+        }
+
+        self.clearResults = function() {
+            self.resultData(undefined)
+        }
+    }
+
+    ko.applyBindings(new viewModel())
+</script>
+</html>
