@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>let</title>
+    <script src="/Knockout-Practice/js/knockout-3.5.1.js"></script>
+</head>
+<body>
+    <!-- 使用let方式自定義變數，不會在viewModel中 -->
+    <!-- 把自定義的inventory的s，放入vm的suppliers -->
+    <!-- ko let: {
+        inventory: {s: suppliers, b: bins},
+        calculatedDisplay: someCalculation
+    } -->
+    <div data-bind="foreach: {data: inventory.s, as: 'supplier'}">
+        <div data-bind="foreach: {data: inventory.b, as: 'bin'}">
+            <span data-bind="text: calculatedDisplay(supplier, bin)"></span>
+        </div>
+    </div>
+    <!-- /ko -->
+</body>
+<script type="text/javascript">
+    let vm = {
+        suppliers: [1, 2, 3],
+        bins: ['a', 'b', 'c'],
+        someCalculation: function (supplier, bin) {
+            /* return some calculated value based on parameters */ 
+            return supplier + bin;
+        }
+    }
+    
+    ko.applyBindings(vm)
+</script>
+</html>
