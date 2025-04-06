@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component-2</title>
+    <script src="/Knockout-Practice/js/knockout-3.5.1.js"></script>
+</head>
+<body>
+    <!-- 可以放在單獨的文件中 （這只是樣板，並不會執行於畫面中，真正執行是使用到該模板的自定義元素::my-special-list）-->
+    <template id="my-special-list-template">
+        <h3>樣板標題</h3>
+        <!-- 1. 這裡的myItems，指向viewModel的myItems -->
+        <ul data-bind="foreach: { data: myItems, as: 'myItem' }">
+            <li>
+                <h4>樣板中的列表標題</h4>
+                <!-- $componentTemplateNodes 表示自定義元素的樣板節點 -->
+                <!-- 💖💖─=≡Σ((( つ•̀ω•́)つ這裡的ko註解語法，其實會對應到<em>標籤 -->
+                    <!-- data中的myItem其實就是peopleArray中的元素 -->
+                <!-- ko template: { nodes: $componentTemplateNodes, data: myItem } -->
+                <!-- /ko -->
+            </li>
+        </ul>
+    </template>
+
+    <my-special-list params="items: peopleArray">
+        <!-- 在自定義元素中，增加初始訊息 -->
+        <!-- 💖💖─=≡Σ((( つ•̀ω•́)つ這裡的<em>，其實會對應到上面的ko註解語法 -->
+        <em data-bind="text: name"></em> is 
+        <em data-bind="text: age"></em> years old.
+    </my-special-list>
+
+</body>
+<script type="text/javascript">
+    ko.components.register("my-special-list", {
+        template: {
+            // 指定樣板id
+            element: "my-special-list-template"
+        },
+        // 2. 這裡的myItems，是由外部的params傳進來的
+        viewModel: function(params) {
+                        // 3. 這裡的params是指向<my-special-list>中的params屬性
+            // 這邊簡單理解就是myItems就是peopleArray
+            this.myItems = params.items;
+        }
+    })
+
+    // peopleArray也可以提出來寫成let vm = {...}
+    ko.applyBindings({
+        peopleArray: ko.observableArray([
+            {name: "Lewis", age: 54},
+            {name: "Hathaway", age: 32}
+        ]
+    )})
+</script>
+</html>
